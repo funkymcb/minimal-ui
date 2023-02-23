@@ -2,7 +2,7 @@
     <head>
         <script type="text/javascript">
             function callAPI() {
-                fetch(process.env.API_HOST).then(response => {
+                fetch('api.demo.svc.cluster.local:3000').then(response => {
                     document.getElementById("response").textContent = response;
                     return response.json();
                 }).then(data => {
