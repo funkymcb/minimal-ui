@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: minimal-ui
+  IMAGE_NAME: ${{ github.actor }}/minimal-ui
   VERSION: 0.0.1
 
 jobs:
@@ -33,5 +33,5 @@ jobs:
     - name: Push Docker image
       if: github.event_name != 'pull_request'
       run: |
-        docker push ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+        docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
