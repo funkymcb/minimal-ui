@@ -1,0 +1,37 @@
+name: publish-ui
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: minimal-ui
+  VERSION: 0.0.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+      # login against docker registry
+    - name: Log into registry ${{ env.REGISTRY }}
+      if: github.event_name != 'pull_request'
+      run: |
+        docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+
+    # Build Docker image (don't push on PR)
+    - name: Build Docker image
+      if: github.event_name != 'pull_request'
+      run: |
+        docker build -t ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }} --target ui-build .
+
+    # Push Docker image (don't push on PR)
+    - name: Push Docker image
+      if: github.event_name != 'pull_request'
+      run: |
+        docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+
