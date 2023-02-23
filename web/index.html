@@ -2,7 +2,7 @@
     <head>
         <script type="text/javascript">
             function callAPI() {
-                fetch('http://localhost:3000/api').then(response => {
+                fetch('http://0.0.0.0:3000/api').then(response => {
                     document.getElementById("response").textContent = response;
                     return response.json();
                 }).then(data => {
